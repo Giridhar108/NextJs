@@ -42,7 +42,7 @@ export default function Home() {
     </div>
     <ul>
       Hare Krishna
-      {data.users.map((user: User) => (
+      {data.users && data.users.map((user: User) => (
         <li key={user.id}>
           <Link href="/user/[id]" as={`/user/${user.id}`}>
             <a>{`User ${user.id}`}</a>

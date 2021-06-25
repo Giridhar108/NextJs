@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { Count } from "../../interface/count";
 
-import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState: Count = {
   number: 0,

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Users } from "../../interface/users";
+import { User, Users } from "../../interface/users";
 
 import { HYDRATE } from "next-redux-wrapper";
 import { AppThunk } from "../store/store";
@@ -13,11 +13,17 @@ const initialState: Users = {
 };
 
 export const users = createSlice({
-  name: "user",
+  name: "users",
   initialState,
   reducers: {
-    setUser(state, action) {
+    setUsers(state, action) {
       return action.payload;
+    },
+    setUser(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+      }
     },
   },
   extraReducers: {
@@ -32,15 +38,24 @@ export const users = createSlice({
 });
 
 export const fetchSubject =
-  (url: any): AppThunk =>
+  (url: any, id: any = ""): AppThunk =>
   async (dispatch) => {
-    const data = await fetcher<Users[]>(url);
+    const data = await fetcher<Users>(url);
 
     dispatch(
-      users.actions.setUser({
+      users.actions.setUsers({
         users: data,
       })
     );
+      console.log(data)
+    if (id) {
+      dispatch(
+        users.actions.setUsers({
+            id,
+            name: data.name,
+        })
+      );
+    }
   };
 
 export default users.reducer;
